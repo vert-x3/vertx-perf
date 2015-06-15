@@ -23,9 +23,9 @@
 
   <properties>
     <!-- the main verticle class name -->
-    <!-- <main.verticle>io.vertx.perf.core.http.SimpleServer</main.verticle> -->
-    <main.verticle>io.vertx.perf.web.SimpleHttp</main.verticle>
-    <!-- <main.verticle>io.vertx.perf.web.SimpleStatic</main.verticle> -->
+    <main.verticle>io.vertx.perf.core.http.SimpleServer</main.verticle>
+    <!-- <main.verticle>io.vertx.perf.web.SimpleHttp</main.verticle>
+    <main.verticle>io.vertx.perf.web.SimpleStatic</main.verticle> -->
   </properties>
 
   <repositories>

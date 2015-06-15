@@ -1,6 +1,7 @@
 package io.vertx.perf.web;
 
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
 
 /**
@@ -25,4 +26,5 @@ public class SimpleHttp extends AbstractVerticle {
 
     System.out.println("Server is started");
   }
+
 }
