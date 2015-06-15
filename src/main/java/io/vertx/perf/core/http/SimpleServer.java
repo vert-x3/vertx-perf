@@ -2,6 +2,7 @@ package io.vertx.perf.core.http;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.buffer.Buffer;
+import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
 
@@ -15,23 +16,20 @@ import java.util.Date;
 public class SimpleServer extends AbstractVerticle {
 
   private final Buffer helloWorldBuffer = Buffer.buffer("Hello, World!");
-  private final String helloWorldContentLength = String.valueOf(helloWorldBuffer.length());
+  private final CharSequence helloWorldContentLength = HttpHeaders.createOptimized(String.valueOf(helloWorldBuffer.length()));
   private final DateFormat DATE_FORMAT = new SimpleDateFormat("EEE, dd MMM yyyyy HH:mm:ss z");
+
+  private static final CharSequence HEADER_SERVER_VERTX = HttpHeaders.createOptimized("vert.x");
+  private static final CharSequence RESPONSE_TYPE_PLAIN = HttpHeaders.createOptimized("text/plain");
+
   private String dateString;
 
-  private static final String HEADER_CONTENT_TYPE = "Content-Type";
-  private static final String HEADER_CONTENT_LENGTH = "Content-Length";
-  private static final String HEADER_SERVER = "Server";
-  private static final String HEADER_SERVER_VERTX = "vert.x";
-  private static final String HEADER_DATE = "Date";
 
-  private static final String RESPONSE_TYPE_PLAIN = "text/plain";
-
-  private void setHeaders(HttpServerResponse resp, String contentType, String contentLength) {
-    resp.putHeader(HEADER_CONTENT_TYPE, contentType);
-    resp.putHeader(HEADER_CONTENT_LENGTH, contentLength);
-    resp.putHeader(HEADER_SERVER, HEADER_SERVER_VERTX );
-    resp.putHeader(HEADER_DATE, dateString);
+  private void setHeaders(HttpServerResponse resp) {
+    resp.putHeader(HttpHeaders.CONTENT_TYPE, RESPONSE_TYPE_PLAIN);
+    resp.putHeader(HttpHeaders.CONTENT_LENGTH, helloWorldContentLength);
+    resp.putHeader(HttpHeaders.SERVER, HEADER_SERVER_VERTX );
+    resp.putHeader(HttpHeaders.DATE, dateString);
   }
 
   private void formatDate() {
@@ -48,7 +46,7 @@ public class SimpleServer extends AbstractVerticle {
     System.out.println("Port: " + port);
     server.requestHandler(req -> {
       HttpServerResponse resp = req.response();
-      setHeaders(resp, RESPONSE_TYPE_PLAIN, helloWorldContentLength);
+      setHeaders(resp);
       resp.end(helloWorldBuffer);
     }).listen(port, host);
   }
