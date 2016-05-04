@@ -32,7 +32,7 @@
         </exclusion>
         <exclusion>
           <groupId>io.netty</groupId>
-          <artifactId>netty-http</artifactId>
+          <artifactId>netty-codec-http</artifactId>
         </exclusion>
         <exclusion>
           <groupId>io.netty</groupId>
